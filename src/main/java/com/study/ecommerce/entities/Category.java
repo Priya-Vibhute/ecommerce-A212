@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Category {
 	
+//	@Id is used for primary key
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
