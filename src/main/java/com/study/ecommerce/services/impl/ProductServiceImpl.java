@@ -59,9 +59,18 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto updateProduct(Integer id, ProductDto productDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		
+		Product product = productRepository.findById(id)
+				.orElseThrow(()->new RuntimeException("Id not found"));
+		
+		product.setName(productDto.getName());
+		product.setDescription(productDto.getDescription());
+		product.setPrice(productDto.getPrice());
+		
+		Product updatedProduct = productRepository.save(product);
+		
+		return modelMapper.map(updatedProduct, ProductDto.class);
+	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 
 	@Override
 	public void deleteProduct(Integer id) {
