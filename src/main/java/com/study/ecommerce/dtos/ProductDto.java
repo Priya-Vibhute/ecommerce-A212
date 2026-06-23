@@ -1,5 +1,6 @@
 package com.study.ecommerce.dtos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.study.ecommerce.entities.Category;
 
 import jakarta.persistence.Column;
@@ -30,6 +31,7 @@ public class ProductDto {
 	
 	@Min(1)
 	private Integer price;
+	
 	private Category category;
 
 }
