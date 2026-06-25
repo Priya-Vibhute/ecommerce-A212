@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.study.ecommerce.dtos.UserDto;
+import com.study.ecommerce.repositories.UserRepository;
 import com.study.ecommerce.services.UserService;
 
 import jakarta.validation.Valid;
@@ -18,9 +21,15 @@ import jakarta.validation.Valid;
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
+
+    private final UserRepository userRepository;
 	
 	@Autowired
 	private UserService userService;
+
+    UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 	
 //	================================================================
 //	POST -localhost:8080/users
@@ -30,6 +39,15 @@ public class UserController {
 	{
 		return new ResponseEntity<UserDto>(userService.register(userDto),
 				                                           HttpStatus.CREATED);
+	}
+//	================================================================
+//	GET localhost:8080/users/check-email?email=a@itvedant.com
+//	================================================================
+	
+	@GetMapping("/check-email")
+	public boolean checkEmail(@RequestParam String email)
+	{
+		return userService.emailExists(email);
 	}
 	
 	
